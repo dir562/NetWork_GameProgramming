@@ -49,6 +49,9 @@
     <ResourceCompile Include="Resource.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
+    <ResourceCompile Include="Resource1.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -115,6 +118,15 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="bitmap20.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap21.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap22.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap23.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

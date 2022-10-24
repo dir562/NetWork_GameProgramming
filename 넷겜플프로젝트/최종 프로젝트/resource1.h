@@ -22,6 +22,9 @@
 #define IDB_BITMAP18                    118
 #define IDB_BITMAP19                    119
 #define IDB_BITMAP20                    120
+#define IDB_BITMAP21                    122
+#define IDB_BITMAP22                    123
+#define IDB_BITMAP23                    124
 #define IDR_MENU1                       121
 #define ID_40001                        40001
 #define ID_40002                        40002

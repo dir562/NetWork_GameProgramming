@@ -167,9 +167,13 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
+    <ResourceCompile Include="Resource1.rc" />
     <ResourceCompile Include="최종 프로젝트.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="bitmap23.bmp" />
+    <Image Include="bitmap22.bmp" />
+    <Image Include="bitmap21.bmp" />
     <Image Include="bitmap1.bmp" />
     <Image Include="bitmap10.bmp" />
     <Image Include="bitmap11.bmp" />

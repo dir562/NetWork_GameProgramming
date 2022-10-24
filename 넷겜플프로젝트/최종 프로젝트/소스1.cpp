@@ -108,8 +108,8 @@ void DrawBitmap(HDC hdc, int x, int y, HBITMAP hBit)
 	by = bit.bmHeight;
 
 	BitBlt(hdc, x, y, bx, by, MemDC, 0, 0, SRCCOPY);
-
 	SelectObject(MemDC, OldBitmap);
+
 	DeleteDC(MemDC);
 }
 
@@ -371,28 +371,6 @@ void make_hell_by_toolbar()
 }	
 
 
-void make_firstM_by_toolbar() // 미사일 1배
-{
-	one = TRUE;
-	two = FALSE;
-	three = FALSE;
-}
-
-void make_SecondM_by_toolbar()
-{
-	MessageBox(hWndMain, "미사일 2배.", "알림", MB_OK);
-	one = FALSE;
-	two = TRUE;
-	three = FALSE;
-}
-
-void make_ThirdM_by_toolbar()
-{
-	MessageBox(hWndMain, "미사일 3배.", "알림", MB_OK);
-	one = FALSE;
-	two = FALSE;
-	three = TRUE;
-}
 
 
 void Pause_and_Resume(HWND hWnd)
@@ -455,6 +433,9 @@ void Game_Setting(HWND hWnd)
 
 	menu = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP19));
 	help = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
+	hHeart1 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
+	hHeart2 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
+	hHeart3 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
 
 	memset(&ass, 0, sizeof(Boom));
 
@@ -464,6 +445,7 @@ void Game_Setting(HWND hWnd)
 	SetTimer(hWnd, 4, 1, NULL);
 	SetTimer(hWnd, 6, 1, NULL);
 	SetTimer(hWnd, 8, 1, NULL);
+
 }
 
 void Pause_by_toolbar(HWND hWnd)
@@ -560,6 +542,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	int SBPart[3];
 
+
 	switch (iMsg) {
 	case WM_COMMAND:
 	{
@@ -577,15 +560,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case ID_40004:
 			make_hell_by_toolbar();
 			break;
-		case ID_40005:
-			make_firstM_by_toolbar();
-			break;
-		case ID_40006:
-			make_SecondM_by_toolbar();
-			break;
-		case ID_40007:
-			make_ThirdM_by_toolbar();
-			break;
+
 		case ID_40015:
 			Pause_by_toolbar(hWnd);
 			break;
@@ -621,12 +596,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		return 0;
 	case WM_TIMER:
 		switch (wParam) {
-		//case 0:
+		case 0:
 		//	c++;
 		//	if (c > 2)
 		//		c = 0;
 		//	DoubleBuffering();
-		//	break;
+			break;
 		case 1:
 			Game_Cycle(hWnd);
 			break;
@@ -753,6 +728,7 @@ void DoubleBuffering(void)
 	OldBit = (HBITMAP)SelectObject(hMemDC, hBufBit);
 
 	FillRect(hMemDC, &crt, GetSysColorBrush(COLOR_WINDOW));
+
 	DrawBitmap(hMemDC, 0, 0, Backg);
 	DrawBitmap(hMemDC, 0, 625, CrossHair);
 	DrawBitmap(hMemDC, 122, 625, CrossHair);
@@ -761,12 +737,17 @@ void DoubleBuffering(void)
 	DrawBitmap(hMemDC, 488, 625, CrossHair);
 	DrawBitmap(hMemDC, 610, 625, CrossHair);
 
-	DrawBitmap(hMemDC, 100, 0, hLauncher[2]);
-	DrawBitmap(hMemDC, 200, 0, hLauncher[2]);
-	DrawBitmap(hMemDC, 300, 0, hLauncher[2]);
-	DrawBitmap(hMemDC, 400, 0, hLauncher[2]);
-	DrawBitmap(hMemDC, 500, 0, hLauncher[2]);
+	DrawBitmap(hMemDC, 0, 24, hHeart1);
+	DrawBitmap(hMemDC, 60, 24, hHeart2);
+	DrawBitmap(hMemDC, 120, 24, hHeart3);
 
+
+//	DrawBitmap(hMemDC, 100, 0, hLauncher[2]);
+//	DrawBitmap(hMemDC, 200, 0, hLauncher[2]);
+//	DrawBitmap(hMemDC, 300, 0, hLauncher[2]);
+//	DrawBitmap(hMemDC, 400, 0, hLauncher[2]);
+//	DrawBitmap(hMemDC, 500, 0, hLauncher[2]);
+//	DrawBitmap(hMemDC, 600, 0, hLauncher[2]);
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -796,6 +777,8 @@ void DoubleBuffering(void)
 			DrawBitmap(hMemDC, -10, 0, help);
 		}
 	}
+
+
 	SelectObject(hMemDC, OldBit);
 	DeleteDC(hMemDC);
 	ReleaseDC(hWndMain, hdc);
@@ -851,7 +834,11 @@ void TransBlt(HDC hdc, int x, int y, HBITMAP hbitmap, COLORREF clrMask)
 	COLORREF cColor;
 	HBITMAP bmAndBack, bmAndObject, bmAndMem, bmSave;
 	HBITMAP bmBackOld, bmObjectOld, bmMemOld, bmSaveOld;
+	HBITMAP bmHeart1, bmHeart2, bmHeart3;
+	HBITMAP bmHeart1Old, bmHeart2Old, bmHeart3Old;
+
 	HDC  hdcMem, hdcBack, hdcObject, hdcTemp, hdcSave;
+	HDC hdcheart;
 	POINT ptSize;
 
 	hdcTemp = CreateCompatibleDC(hdc);
@@ -865,16 +852,26 @@ void TransBlt(HDC hdc, int x, int y, HBITMAP hbitmap, COLORREF clrMask)
 	hdcObject = CreateCompatibleDC(hdc);
 	hdcMem = CreateCompatibleDC(hdc);
 	hdcSave = CreateCompatibleDC(hdc);
+	hdcheart = CreateCompatibleDC(hdc);
 
 	bmAndBack = CreateBitmap(ptSize.x, ptSize.y, 1, 1, NULL);
 	bmAndObject = CreateBitmap(ptSize.x, ptSize.y, 1, 1, NULL);
+
 	bmAndMem = CreateCompatibleBitmap(hdc, ptSize.x, ptSize.y);
 	bmSave = CreateCompatibleBitmap(hdc, ptSize.x, ptSize.y);
+
+	bmHeart1 = CreateCompatibleBitmap(hdc, ptSize.x, ptSize.y);
+	bmHeart2 = CreateCompatibleBitmap(hdc, ptSize.x, ptSize.y);
+	bmHeart3 = CreateCompatibleBitmap(hdc, ptSize.x, ptSize.y);
 
 	bmBackOld = (HBITMAP)SelectObject(hdcBack, bmAndBack);
 	bmObjectOld = (HBITMAP)SelectObject(hdcObject, bmAndObject);
 	bmMemOld = (HBITMAP)SelectObject(hdcMem, bmAndMem);
 	bmSaveOld = (HBITMAP)SelectObject(hdcSave, bmSave);
+
+	bmHeart1Old = (HBITMAP)SelectObject(hdcheart, bmHeart1);
+	bmHeart2Old = (HBITMAP)SelectObject(hdcheart, bmHeart2);
+	bmHeart3Old = (HBITMAP)SelectObject(hdcheart, bmHeart3);
 
 	SetMapMode(hdcTemp, GetMapMode(hdc));
 
@@ -893,17 +890,22 @@ void TransBlt(HDC hdc, int x, int y, HBITMAP hbitmap, COLORREF clrMask)
 	BitBlt(hdcMem, 0, 0, ptSize.x, ptSize.y, hdcTemp, 0, 0, SRCPAINT);
 	BitBlt(hdc, x, y, ptSize.x, ptSize.y, hdcMem, 0, 0, SRCCOPY);
 	BitBlt(hdcTemp, 0, 0, ptSize.x, ptSize.y, hdcSave, 0, 0, SRCCOPY);
+	BitBlt(hdcheart, 0, 0, ptSize.x, ptSize.y, hdcTemp, 0, 0, SRCPAINT);
 
 	DeleteObject(SelectObject(hdcBack, bmBackOld));
 	DeleteObject(SelectObject(hdcObject, bmObjectOld));
 	DeleteObject(SelectObject(hdcMem, bmMemOld));
 	DeleteObject(SelectObject(hdcSave, bmSaveOld));
+	DeleteObject(SelectObject(hdcheart, bmHeart1Old));
+	DeleteObject(SelectObject(hdcheart, bmHeart2Old));
+	DeleteObject(SelectObject(hdcheart, bmHeart3Old));
 
 	DeleteDC(hdcMem);
 	DeleteDC(hdcBack);
 	DeleteDC(hdcObject);
 	DeleteDC(hdcSave);
 	DeleteDC(hdcTemp);
+	DeleteDC(hdcheart);
 }
 
 
