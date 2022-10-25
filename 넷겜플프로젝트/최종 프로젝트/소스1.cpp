@@ -66,13 +66,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	WndClass.hInstance = hInstance;
 	WndClass.lpfnWndProc = WndProc;
 	WndClass.lpszClassName = lpszClass;
-	WndClass.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);
+	WndClass.lpszMenuName = MAKEINTRESOURCE(IDC_MY);
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&WndClass);
 
 	WndClass.lpfnWndProc = PauseChildProc;
 	WndClass.lpszClassName = "PauseChild";
-	WndClass.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);
+	WndClass.lpszMenuName = MAKEINTRESOURCE(IDC_MY);
 	WndClass.style = CS_SAVEBITS;
 	RegisterClass(&WndClass);
 
@@ -548,36 +548,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (LOWORD(wParam))
 		{
-		case ID_40001:
+		case IDM_EXIT:
 			make_easy_by_toolbar();
 			break;
-		case ID_40002:
+		case ID_32771:
 			make_normal_by_toolbar();
 			break;
-		case ID_40003:
+		case ID_32772:
 			make_hard_by_toolbar();
 			break;
-		case ID_40004:
+		case ID_32773:
 			make_hell_by_toolbar();
 			break;
 
-		case ID_40015:
+		case IDM_ABOUT:
 			Pause_by_toolbar(hWnd);
 			break;
-		case ID_40016:
+		case ID_32774:
 			Resume_by_toolbar(hWnd);
 			break;
 
-		case ID_40017:
+		case ID_32775:
 			MessageBox(hWndMain, "게임이 종료되었습니다.", "알림", MB_OK);
 			PostQuitMessage(0);
 			break;
-		case IDM_ABOUT:
+		/*case IDM_ABOUT:
 			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
-			break;
+			break;*/
 		default:
 			return DefWindowProc(hWnd, iMsg, wParam, lParam);
 		}
