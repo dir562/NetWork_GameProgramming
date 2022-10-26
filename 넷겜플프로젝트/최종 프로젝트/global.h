@@ -57,4 +57,7 @@ static BOOL one = TRUE;
 static BOOL two = FALSE;
 static BOOL three = FALSE;
 static BOOL four = FALSE;
+
+
+static BOOL GameKey_On = TRUE;
 UINT wDeviceID = 0;

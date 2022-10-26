@@ -56,34 +56,47 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	HWND hWnd;
 	MSG Message;
 	WNDCLASS WndClass;
+	HMENU D_menu;
 	g_hInst = hInstance;
 
-	WndClass.cbClsExtra = 0;
-	WndClass.cbWndExtra = 0;
-	WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	WndClass.hInstance = hInstance;
-	WndClass.lpfnWndProc = WndProc;
-	WndClass.lpszClassName = lpszClass;
-	WndClass.lpszMenuName = MAKEINTRESOURCE(IDC_MY);
-	WndClass.style = CS_HREDRAW | CS_VREDRAW;
-	RegisterClass(&WndClass);
+		WndClass.cbClsExtra = 0;
+		WndClass.cbWndExtra = 0;
+		WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+		WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+		WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+		WndClass.hInstance = hInstance;
+		WndClass.lpfnWndProc = WndProc;
+		WndClass.lpszClassName = lpszClass;
+		WndClass.lpszMenuName = NULL;
+		
 
-	WndClass.lpfnWndProc = PauseChildProc;
-	WndClass.lpszClassName = "PauseChild";
-	WndClass.lpszMenuName = MAKEINTRESOURCE(IDC_MY);
-	WndClass.style = CS_SAVEBITS;
-	RegisterClass(&WndClass);
+	
+		WndClass.style = CS_HREDRAW | CS_VREDRAW;
+		RegisterClass(&WndClass);
+		WndClass.lpszMenuName = MAKEINTRESOURCE(IDC_MY);
+		WndClass.lpfnWndProc = PauseChildProc;
+		WndClass.lpszClassName = "PauseChild";
 
-	hWnd = CreateWindow(lpszClass, lpszClass, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-		0, 0, 675, 775,
-		NULL, (HMENU)NULL, hInstance, NULL);
 
-	hWnd = CreateWindow(lpszClass, lpszClass, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-		0, 0, 675, 775,
-		NULL, (HMENU)NULL, hInstance, NULL);
-	ShowWindow(hWnd, nCmdShow);
+
+		WndClass.style = CS_SAVEBITS;
+		RegisterClass(&WndClass);
+	
+
+
+
+	    D_menu = LoadMenu(hInstance, MAKEINTRESOURCE(IDC_MY));
+		hWnd = CreateWindow(lpszClass, lpszClass, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+			0, 0, 675, 775,
+			NULL, NULL, hInstance, NULL);
+		ShowWindow(hWnd, nCmdShow);
+
+
+
+//		hWnd = CreateWindow(lpszClass, lpszClass, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+//			0, 0, 675, 775,
+//			NULL, (HMENU)NULL, hInstance, NULL);
+
 
 	while (GetMessage(&Message, NULL, 0, 0)) {
 		TranslateMessage(&Message);
@@ -390,6 +403,7 @@ void Pause_and_Resume(HWND hWnd)
 		SetTimer(hWnd, 2, 200, NULL);
 		SetTimer(hWnd, 5, 1000, NULL);
 		isGameRunning = TRUE;
+		GameKey_On = FALSE;
 	}
 	else if (isGameRunning)
 	{
@@ -514,6 +528,7 @@ void Game_Cycle(HWND hWnd) {
 				_itoa_s(RankScore, buf, 10);
 
 				MessageBox(hWndMain, "죽었습니다. Space bar를 누르시면 재시작 합니다.", "알림", MB_OK);
+				GameKey_On = TRUE;
 			}
 			if (ass[i].y > 625)
 			{
@@ -548,26 +563,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (LOWORD(wParam))
 		{
-		case IDM_EXIT:
-			make_easy_by_toolbar();
-			break;
-		case ID_32771:
-			make_normal_by_toolbar();
-			break;
-		case ID_32772:
-			make_hard_by_toolbar();
-			break;
-		case ID_32773:
-			make_hell_by_toolbar();
-			break;
-
-		case IDM_ABOUT:
-			Pause_by_toolbar(hWnd);
-			break;
-		case ID_32774:
-			Resume_by_toolbar(hWnd);
-			break;
-
 		case ID_32775:
 			MessageBox(hWndMain, "게임이 종료되었습니다.", "알림", MB_OK);
 			PostQuitMessage(0);
@@ -609,7 +604,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			MakeBoom();
 			break;
 		case 3:
-			if (Player1_MoveL) // 캐릭터 이동......
+			if (Player1_MoveL&&isGameRunning==TRUE&&bPause == FALSE) // 캐릭터 이동......
 			{
 				player1.x -= 3;
 				if (player1.x < 0)
@@ -618,7 +613,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		case 4:
-			if (Player1_MoveR) // 캐릭터 이동.... 
+			if (Player1_MoveR&&isGameRunning==TRUE&&bPause == FALSE) // 캐릭터 이동.... 
 			{
 				player1.x += 3;
 				if (player1.x > 625)
@@ -662,6 +657,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case 'P':
 			isMenu = FALSE;
 			isHelp = FALSE;
+			break;
+		case 'Q':
+			if (GameKey_On)
+			{
+				make_easy_by_toolbar();
+			}
+			break;
+		case 'W':
+			if (GameKey_On)
+			{
+				make_normal_by_toolbar();
+			}
+			break;
+		case 'E':
+			if (GameKey_On)
+			{
+				make_hard_by_toolbar();
+			}
+			break;
+		case 'R':
+			if (GameKey_On)
+			{
+				make_hell_by_toolbar();
+			}
 			break;
 		case VK_LEFT:
 
