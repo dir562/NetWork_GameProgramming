@@ -251,6 +251,7 @@ void Many_things()
 	int x, y;
 	x = rand() % 625 + 1;
 	y = 50;
+
 	if (one == TRUE)
 	{
 		for (int i = 0; i < 300; i++)
@@ -928,3 +929,7 @@ void TransBlt(HDC hdc, int x, int y, HBITMAP hbitmap, COLORREF clrMask)
 }
 
 
+int main()
+{
+	
+}

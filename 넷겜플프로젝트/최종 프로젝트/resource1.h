@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++에서 생성한 포함 파일입니다.
-// Resource.rc에서 사용되고 있습니다.
+// Resource1.rc에서 사용되고 있습니다.
 //
 #define IDB_BITMAP1                     101
 #define IDB_BITMAP2                     102
@@ -22,10 +22,20 @@
 #define IDB_BITMAP18                    118
 #define IDB_BITMAP19                    119
 #define IDB_BITMAP20                    120
+#define IDR_MENU1                       121
 #define IDB_BITMAP21                    122
 #define IDB_BITMAP22                    123
+#define IDB_BITMAP25                    123
 #define IDB_BITMAP23                    124
-#define IDR_MENU1                       121
+#define IDB_BITMAP26                    124
+#define IDB_BITMAP24                    125
+#define IDB_BITMAP27                    126
+#define IDB_BITMAP28                    127
+#define IDB_BITMAP29                    128
+#define IDB_BITMAP30                    129
+#define IDB_BITMAP31                    130
+#define IDB_BITMAP32                    131
+#define IDB_BITMAP33                    132
 #define ID_40001                        40001
 #define ID_40002                        40002
 #define ID_40003                        40003
@@ -48,7 +58,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        122
+#define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         40018
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101

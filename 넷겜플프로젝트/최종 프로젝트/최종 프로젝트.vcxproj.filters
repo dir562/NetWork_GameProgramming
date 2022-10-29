@@ -129,6 +129,36 @@
     <Image Include="bitmap23.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="bitmap24.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap25.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap26.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap27.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap28.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap29.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap30.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap31.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap32.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap33.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Desktop\Project12\Project1\BGM.mid">

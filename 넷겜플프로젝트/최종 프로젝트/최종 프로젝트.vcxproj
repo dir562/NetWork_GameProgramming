@@ -187,7 +187,17 @@
     <Image Include="bitmap19.bmp" />
     <Image Include="bitmap2.bmp" />
     <Image Include="bitmap20.bmp" />
+    <Image Include="bitmap24.bmp" />
+    <Image Include="bitmap25.bmp" />
+    <Image Include="bitmap26.bmp" />
+    <Image Include="bitmap27.bmp" />
+    <Image Include="bitmap28.bmp" />
+    <Image Include="bitmap29.bmp" />
     <Image Include="bitmap3.bmp" />
+    <Image Include="bitmap30.bmp" />
+    <Image Include="bitmap31.bmp" />
+    <Image Include="bitmap32.bmp" />
+    <Image Include="bitmap33.bmp" />
     <Image Include="bitmap4.bmp" />
     <Image Include="bitmap5.bmp" />
     <Image Include="bitmap6.bmp" />
