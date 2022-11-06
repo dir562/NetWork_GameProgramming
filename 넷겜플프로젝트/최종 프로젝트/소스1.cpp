@@ -439,6 +439,10 @@ void Game_Setting(HWND hWnd)
 	for (int i = 0; i < 11; i++) {
 		hBit[i] = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP1 + i));
 	}
+	for (int i = 0; i < 11; i++)
+	{
+		hBit2[i] = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP24 + i));
+	}
 	for (int h = 0; h < 3; h++)
 	{
 		hLauncher[h] = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP13 + h));
@@ -451,6 +455,9 @@ void Game_Setting(HWND hWnd)
 	hHeart1 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
 	hHeart2 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
 	hHeart3 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
+	hHeart4 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP35));
+
+	
 
 	memset(&ass, 0, sizeof(Boom));
 
@@ -460,6 +467,7 @@ void Game_Setting(HWND hWnd)
 	SetTimer(hWnd, 4, 1, NULL);
 	SetTimer(hWnd, 6, 1, NULL);
 	SetTimer(hWnd, 8, 1, NULL);
+	SetTimer(hWnd, 9, 1, NULL);
 
 }
 
@@ -525,6 +533,7 @@ void Game_Cycle(HWND hWnd) {
 				isGameRunning = FALSE;
 				Player1_MoveR = FALSE;
 				Player1_MoveL = FALSE;
+			
 				TCHAR buf[10]{ 0 };
 				_itoa_s(RankScore, buf, 10);
 
@@ -612,6 +621,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					player1.x = 0;
 				
 			}
+	
 			break;
 		case 4:
 			if (Player1_MoveR&&isGameRunning==TRUE&&bPause == FALSE) // 캐릭터 이동.... 
@@ -619,9 +629,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				player1.x += 3;
 				if (player1.x > 625)
 					player1.x = 625;
-			}
+			}	
+
 			break;
 		case 5:
+
 			Time++;
 			break;
 		case 6:
@@ -639,8 +651,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				bFade = !bFade;
 			}
 			break;
+		case 8:
+			if (Player2_MoveL&& isGameRunning == TRUE && bPause == FALSE) // 캐릭터 이동......
+			{
+				player2.x -= 3;
+//				if (player2.x < 0)
+	//				player2.x = 0;
 
+			}
+			break;
+		case 9:
+			if (Player2_MoveR && isGameRunning == TRUE && bPause == FALSE) // 캐릭터 이동.... 
+			{
+				player2.x += 3;
+				if (player2.x > 625)
+					player2.x = 625;
+			}
+
+			break;
 		}
+
 		return 0;
 	case WM_KEYDOWN:
 		switch (wParam) {
@@ -693,11 +723,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 			break;
 		case VK_RIGHT:
-
 			if (!bdead)
 			{
 
 				Player1_MoveR = TRUE;
+			}
+			break;
+		case VK_NUMPAD4:
+			if (!bdead)
+			{
+				Player2_MoveL = TRUE;
+				
+			}
+			break;
+		case VK_NUMPAD6:
+			if (!bdead)
+			{
+				Player2_MoveR = TRUE;
+
 			}
 			break;
 		case VK_SPACE:
@@ -713,9 +756,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case VK_RIGHT:
 			Player1_MoveR = FALSE;
 			break;
+		case VK_NUMPAD4:
+			Player2_MoveL = FALSE;
+			break;
+		case VK_NUMPAD6:
+			Player2_MoveR = FALSE;
+			break;
 		}
-
+	
 		count = 0;
+		count2 = 0;
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
@@ -727,6 +777,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		for (int i = 0; i < 4; i++) {
 			DeleteObject(hBit[i]);
+			DeleteObject(hBit2[i]);
 		}
 		PostQuitMessage(0);
 		return 0;
@@ -778,6 +829,8 @@ void DoubleBuffering(void)
 		}
 	}
 
+
+
 	if (Player1_MoveL)
 		DrawBitmap(hMemDC, player1.x , 625, hBit[4 + count]);
 	else if (Player1_MoveR)
@@ -786,6 +839,15 @@ void DoubleBuffering(void)
 		DrawBitmap(hMemDC, player1.x, 625, hBit[count]);
 	else
 		TransBlt(hMemDC, player1.x, 625, hBit[10], RGB(255, 0, 0));
+
+	if (Player2_MoveL)
+		DrawBitmap(hMemDC, player2.x+300, 625, hBit2[4 + count2]);
+	else if (Player2_MoveR)
+		DrawBitmap(hMemDC, player2.x+300, 625, hBit2[7 + count2]);
+	else if (!bdead)
+		DrawBitmap(hMemDC, player2.x+300, 625, hBit2[count2]);
+	else
+		TransBlt(hMemDC, player2.x+300, 625, hBit2[10], RGB(255, 0, 0));
 
 	DrawBitmap(hMemDC, 0, 675, oBitmap);
 

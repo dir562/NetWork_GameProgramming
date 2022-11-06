@@ -60,7 +60,7 @@
     <Image Include="최종 프로젝트.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="bitmap1.bmp">
+    <Image Include="bitmap28.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="bitmap2.bmp">
@@ -141,9 +141,6 @@
     <Image Include="bitmap27.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="bitmap28.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="bitmap29.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -157,6 +154,15 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="bitmap33.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap34.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="bitmap35.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

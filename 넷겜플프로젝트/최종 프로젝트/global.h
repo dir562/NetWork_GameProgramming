@@ -13,20 +13,31 @@ typedef struct _player {
 	int y;
 }Player;
 
+typedef struct _player2 {
+	int x;
+	int y;
+}Player_s;
+
 Player player1;
+Player_s player2;
+
 
 
 Boom ass[300];
 
 HBITMAP hBufBit;
 HBITMAP hBit[11];
+HBITMAP hBit2[11];
 HBITMAP gBit;
 HBITMAP gBitmap;
 //int nx = 110;
 //int c = 0;
 int count = 0;
+int count2 = 0;
 bool Player1_MoveL = FALSE;
 bool Player1_MoveR = FALSE;
+bool Player2_MoveL = FALSE;
+bool Player2_MoveR = FALSE;
 int Score = 0;
 int Time = 0;
 int RankScore = 0;
@@ -41,6 +52,7 @@ static HBITMAP hLauncher[3];
 static HBITMAP hHeart1;
 static HBITMAP hHeart2;
 static HBITMAP hHeart3;
+static HBITMAP hHeart4;
 static HBITMAP Backg;
 static HBITMAP CrossHair;
 static BOOL isMenu = TRUE;
