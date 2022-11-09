@@ -87,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 
 	    D_menu = LoadMenu(hInstance, MAKEINTRESOURCE(IDC_MY));
 		hWnd = CreateWindow(lpszClass, lpszClass, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-			0, 0, 675, 775,
+			0, 0, 1350, 775,
 			NULL, NULL, hInstance, NULL);
 		ShowWindow(hWnd, nCmdShow);
 
@@ -130,7 +130,7 @@ void DrawBitmap(HDC hdc, int x, int y, HBITMAP hBit)
 void Easy_Mode()
 {
 	int x, y;
-	x = rand() % 625 + 1;
+	x = rand() % 1300 + 1;
 	y = 50;
 	for (int i = 0; i < 300; i++)
 	{
@@ -164,7 +164,7 @@ void Normal_Mode()
 {
 
 	int x, y;
-	x = rand() % 625 + 1;
+	x = rand() % 1300 + 1;
 	y = 50;
 	for (int i = 0; i < 300; i++)
 	{
@@ -203,7 +203,7 @@ void Normal_Mode()
 void Hard_Mode()
 {
 	int x, y;
-	x = rand() % 625 + 1;
+	x = rand() % 1300 + 1;
 	y = 50;
 	for (int i = 0; i < 300; i++)
 	{
@@ -249,7 +249,7 @@ void Hard_Mode()
 void Many_things()
 {
 	int x, y;
-	x = rand() % 625 + 1;
+	x = rand() % 1300 + 1;
 	y = 50;
 
 	if (one == TRUE)
@@ -389,6 +389,7 @@ void make_hell_by_toolbar()
 
 void Pause_and_Resume(HWND hWnd)
 {
+
 	if (!isGameRunning)
 	{
 
@@ -400,6 +401,7 @@ void Pause_and_Resume(HWND hWnd)
 		Time = 0;
 
 		player1.x = 110;
+		player2.x = 775;
 		SetTimer(hWnd, 1, 10, NULL);
 		SetTimer(hWnd, 2, 200, NULL);
 		SetTimer(hWnd, 5, 1000, NULL);
@@ -455,7 +457,7 @@ void Game_Setting(HWND hWnd)
 	hHeart1 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
 	hHeart2 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
 	hHeart3 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP20));
-	hHeart4 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP35));
+	hHeart4 = LoadBitmap(g_hInst, MAKEINTRESOURCE(IDB_BITMAP14));
 
 	
 
@@ -485,6 +487,7 @@ void Pause_by_toolbar(HWND hWnd)
 		Time = 0;
 
 		player1.x = 110;
+		player1.x = 775;
 		SetTimer(hWnd, 1, 10, NULL);
 		SetTimer(hWnd, 2, 200, NULL);
 		SetTimer(hWnd, 5, 1000, NULL);
@@ -518,6 +521,7 @@ void Resume_by_toolbar(HWND hWnd)
 
 
 void Game_Cycle(HWND hWnd) {
+
 	for (int i = 0; i < 300; i++)
 	{
 		if (ass[i].be == TRUE)
@@ -533,7 +537,10 @@ void Game_Cycle(HWND hWnd) {
 				isGameRunning = FALSE;
 				Player1_MoveR = FALSE;
 				Player1_MoveL = FALSE;
-			
+
+				Player2_MoveR = FALSE;
+				Player2_MoveL = FALSE;
+
 				TCHAR buf[10]{ 0 };
 				_itoa_s(RankScore, buf, 10);
 
@@ -552,6 +559,27 @@ void Game_Cycle(HWND hWnd) {
 						RankScore++;
 
 				}
+			}
+
+			if (((ass[i].x < player2.x + 15 && player2.x + 15 < ass[i].x + 20) || (ass[i].x < player2.x && player2.x < ass[i].x + 20)) && ass[i].y > 600)
+			{
+
+				bdead = TRUE;
+				KillTimer(hWnd, 5);
+				KillTimer(hWnd, 1);
+				KillTimer(hWnd, 2);
+				isGameRunning = FALSE;
+				Player1_MoveR = FALSE;
+				Player1_MoveL = FALSE;
+
+				Player2_MoveR = FALSE;
+				Player2_MoveL = FALSE;
+
+				TCHAR buf[10]{ 0 };
+				_itoa_s(RankScore, buf, 10);
+
+				MessageBox(hWndMain, "죽었습니다. Space bar를 누르시면 재시작 합니다.", "알림", MB_OK);
+				GameKey_On = TRUE;
 			}
 		}
 	}
@@ -654,18 +682,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case 8:
 			if (Player2_MoveL&& isGameRunning == TRUE && bPause == FALSE) // 캐릭터 이동......
 			{
-				player2.x -= 3;
-//				if (player2.x < 0)
-	//				player2.x = 0;
+				player2.x -= speeds_2;
+				if (player2.x < 675)
+				{
+					speeds_2 = 0;
+				}
+				else if(player2.x >675)
+				{
+					speeds_2 = 3;
+				}
 
 			}
 			break;
 		case 9:
 			if (Player2_MoveR && isGameRunning == TRUE && bPause == FALSE) // 캐릭터 이동.... 
 			{
-				player2.x += 3;
-				if (player2.x > 625)
-					player2.x = 625;
+				player2.x += speeds_2;
+				if (player2.x > 1300)
+				{
+					speeds_2 =0;
+				}
+				else if (player2.x<1300)
+				{
+					speeds_2 = 3;
+				}
+
 			}
 
 			break;
@@ -729,14 +770,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				Player1_MoveR = TRUE;
 			}
 			break;
-		case VK_NUMPAD4:
+		case 'A':
 			if (!bdead)
 			{
 				Player2_MoveL = TRUE;
 				
 			}
 			break;
-		case VK_NUMPAD6:
+		case 'D':
 			if (!bdead)
 			{
 				Player2_MoveR = TRUE;
@@ -756,10 +797,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case VK_RIGHT:
 			Player1_MoveR = FALSE;
 			break;
-		case VK_NUMPAD4:
+		case 'A':
 			Player2_MoveL = FALSE;
 			break;
-		case VK_NUMPAD6:
+		case 'D':
 			Player2_MoveR = FALSE;
 			break;
 		}
@@ -786,6 +827,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 }
 void DoubleBuffering(void)
 {
+
 	RECT crt;
 	HDC hdc, hMemDC;
 	HBITMAP OldBit;
@@ -801,6 +843,8 @@ void DoubleBuffering(void)
 	FillRect(hMemDC, &crt, GetSysColorBrush(COLOR_WINDOW));
 
 	DrawBitmap(hMemDC, 0, 0, Backg);
+	DrawBitmap(hMemDC, 675, 0, Backg);
+
 	DrawBitmap(hMemDC, 0, 625, CrossHair);
 	DrawBitmap(hMemDC, 122, 625, CrossHair);
 	DrawBitmap(hMemDC, 244, 625, CrossHair);
@@ -808,9 +852,20 @@ void DoubleBuffering(void)
 	DrawBitmap(hMemDC, 488, 625, CrossHair);
 	DrawBitmap(hMemDC, 610, 625, CrossHair);
 
+	DrawBitmap(hMemDC, 675, 625, CrossHair);
+	DrawBitmap(hMemDC, 797, 625, CrossHair);
+	DrawBitmap(hMemDC, 919, 625, CrossHair);
+	DrawBitmap(hMemDC, 1041, 625, CrossHair);
+	DrawBitmap(hMemDC, 1163, 625, CrossHair);
+	DrawBitmap(hMemDC, 1285, 625, CrossHair);
+
 	DrawBitmap(hMemDC, 0, 24, hHeart1);
 	DrawBitmap(hMemDC, 60, 24, hHeart2);
 	DrawBitmap(hMemDC, 120, 24, hHeart3);
+
+	DrawBitmap(hMemDC, 675, 24, hHeart4);
+	DrawBitmap(hMemDC, 735, 24, hHeart4);
+	DrawBitmap(hMemDC, 795, 24, hHeart4);
 
 
 //	DrawBitmap(hMemDC, 100, 0, hLauncher[2]);
@@ -841,15 +896,17 @@ void DoubleBuffering(void)
 		TransBlt(hMemDC, player1.x, 625, hBit[10], RGB(255, 0, 0));
 
 	if (Player2_MoveL)
-		DrawBitmap(hMemDC, player2.x+300, 625, hBit2[4 + count2]);
+		DrawBitmap(hMemDC, player2.x, 625, hBit2[4 + count2]);
 	else if (Player2_MoveR)
-		DrawBitmap(hMemDC, player2.x+300, 625, hBit2[7 + count2]);
+		DrawBitmap(hMemDC, player2.x, 625, hBit2[7 + count2]);
 	else if (!bdead)
-		DrawBitmap(hMemDC, player2.x+300, 625, hBit2[count2]);
+		DrawBitmap(hMemDC, player2.x, 625, hBit2[count2]);
 	else
-		TransBlt(hMemDC, player2.x+300, 625, hBit2[10], RGB(255, 0, 0));
+		TransBlt(hMemDC, player2.x, 625, hBit[10], RGB(255, 0, 0));
 
 	DrawBitmap(hMemDC, 0, 675, oBitmap);
+
+	DrawBitmap(hMemDC, 675, 675, oBitmap);
 
 	if (isMenu == TRUE)
 	{

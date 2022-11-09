@@ -9,12 +9,12 @@ typedef struct _Boom {
 } Boom;
 
 typedef struct _player {
-	int x;
+	int x =110;
 	int y;
 }Player;
 
 typedef struct _player2 {
-	int x;
+	int x= 775;
 	int y;
 }Player_s;
 
@@ -22,6 +22,7 @@ Player player1;
 Player_s player2;
 
 
+int speeds_2 = 3;
 
 Boom ass[300];
 
