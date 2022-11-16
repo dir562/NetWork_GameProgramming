@@ -7,6 +7,7 @@
 
 #include <stdio.h> // printf(), ...
 #include<iostream>
+#include"global.h"
 
 #pragma comment(lib, "ws2_32") // ws2_32.lib ¸µÅ©
 
