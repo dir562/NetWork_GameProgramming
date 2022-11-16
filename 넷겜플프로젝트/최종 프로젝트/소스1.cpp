@@ -24,9 +24,8 @@ HINSTANCE g_hInst;
 HWND hWndMain;
 LPCTSTR lpszClass = TEXT("패닉의 생존");
 
-void DoubleBuffering(void);
 void MakeBoom(void);
-
+void DrawBackGround();
 void TransBlt(HDC hdc, int x, int y, HBITMAP hbitmap, COLORREF clrMask);
 
 
@@ -633,7 +632,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		//	c++;
 		//	if (c > 2)
 		//		c = 0;
-		//	DoubleBuffering();
+		//	DrawBackground();
 			break;
 		case 1:
 			Game_Cycle(hWnd);
@@ -665,7 +664,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			Time++;
 			break;
 		case 6:
-			DoubleBuffering();
+			DrawBackGround();
 			break;
 		case 7:
 			if (bFade)
@@ -825,104 +824,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	}
 	return(DefWindowProc(hWnd, iMsg, wParam, lParam));
 }
-void DoubleBuffering(void)
-{
-
-	RECT crt;
-	HDC hdc, hMemDC;
-	HBITMAP OldBit;
-	GetClientRect(hWndMain, &crt);
-	hdc = GetDC(hWndMain);
 
 
-	if (hBufBit == NULL)
-		hBufBit = CreateCompatibleBitmap(hdc, crt.right, crt.bottom);
-	hMemDC = CreateCompatibleDC(hdc);
-	OldBit = (HBITMAP)SelectObject(hMemDC, hBufBit);
-
-	FillRect(hMemDC, &crt, GetSysColorBrush(COLOR_WINDOW));
-
-	DrawBitmap(hMemDC, 0, 0, Backg);
-	DrawBitmap(hMemDC, 675, 0, Backg);
-
-	DrawBitmap(hMemDC, 0, 625, CrossHair);
-	DrawBitmap(hMemDC, 122, 625, CrossHair);
-	DrawBitmap(hMemDC, 244, 625, CrossHair);
-	DrawBitmap(hMemDC, 366, 625, CrossHair);
-	DrawBitmap(hMemDC, 488, 625, CrossHair);
-	DrawBitmap(hMemDC, 610, 625, CrossHair);
-
-	DrawBitmap(hMemDC, 675, 625, CrossHair);
-	DrawBitmap(hMemDC, 797, 625, CrossHair);
-	DrawBitmap(hMemDC, 919, 625, CrossHair);
-	DrawBitmap(hMemDC, 1041, 625, CrossHair);
-	DrawBitmap(hMemDC, 1163, 625, CrossHair);
-	DrawBitmap(hMemDC, 1285, 625, CrossHair);
-
-	DrawBitmap(hMemDC, 0, 24, hHeart1);
-	DrawBitmap(hMemDC, 60, 24, hHeart2);
-	DrawBitmap(hMemDC, 120, 24, hHeart3);
-
-	DrawBitmap(hMemDC, 675, 24, hHeart4);
-	DrawBitmap(hMemDC, 735, 24, hHeart4);
-	DrawBitmap(hMemDC, 795, 24, hHeart4);
-
-
-//	DrawBitmap(hMemDC, 100, 0, hLauncher[2]);
-//	DrawBitmap(hMemDC, 200, 0, hLauncher[2]);
-//	DrawBitmap(hMemDC, 300, 0, hLauncher[2]);
-//	DrawBitmap(hMemDC, 400, 0, hLauncher[2]);
-//	DrawBitmap(hMemDC, 500, 0, hLauncher[2]);
-//	DrawBitmap(hMemDC, 600, 0, hLauncher[2]);
-
-	for (int i = 0; i < 100; i++)
-	{
-		if (ass[i].be == TRUE)
-		{
-			//DrawBitmap(hMemDC, ass[i].x, ass[i].y, hBit[3]);
-			TransBlt(hMemDC, ass[i].x, ass[i].y, hBit[3], RGB(255, 0, 0));
-		}
-	}
-
-
-
-	if (Player1_MoveL)
-		DrawBitmap(hMemDC, player1.x , 625, hBit[4 + count]);
-	else if (Player1_MoveR)
-		DrawBitmap(hMemDC, player1.x, 625, hBit[7 + count]);
-	else if (!bdead)
-		DrawBitmap(hMemDC, player1.x, 625, hBit[count]);
-	else
-		TransBlt(hMemDC, player1.x, 625, hBit[10], RGB(255, 0, 0));
-
-	if (Player2_MoveL)
-		DrawBitmap(hMemDC, player2.x, 625, hBit2[4 + count2]);
-	else if (Player2_MoveR)
-		DrawBitmap(hMemDC, player2.x, 625, hBit2[7 + count2]);
-	else if (!bdead)
-		DrawBitmap(hMemDC, player2.x, 625, hBit2[count2]);
-	else
-		TransBlt(hMemDC, player2.x, 625, hBit[10], RGB(255, 0, 0));
-
-	DrawBitmap(hMemDC, 0, 675, oBitmap);
-
-	DrawBitmap(hMemDC, 675, 675, oBitmap);
-
-	if (isMenu == TRUE)
-	{
-		DrawBitmap(hMemDC, -60, 0, menu);
-		if (isHelp == TRUE && isMenu == TRUE)
-		{
-			DrawBitmap(hMemDC, -10, 0, help);
-		}
-	}
-
-
-	SelectObject(hMemDC, OldBit);
-	DeleteDC(hMemDC);
-	ReleaseDC(hWndMain, hdc);
-	InvalidateRect(hWndMain, NULL, FALSE);
-}
 void MakeBoom(void)
 {
 
@@ -1048,7 +951,94 @@ void TransBlt(HDC hdc, int x, int y, HBITMAP hbitmap, COLORREF clrMask)
 }
 
 
-int main()
+void DrawBackGround()
 {
-	
+
+	RECT crt;
+	HDC hdc, hMemDC;
+	HBITMAP OldBit;
+	GetClientRect(hWndMain, &crt);
+	hdc = GetDC(hWndMain);
+
+
+	if (hBufBit == NULL)
+		hBufBit = CreateCompatibleBitmap(hdc, crt.right, crt.bottom);
+	hMemDC = CreateCompatibleDC(hdc);
+	OldBit = (HBITMAP)SelectObject(hMemDC, hBufBit);
+
+	FillRect(hMemDC, &crt, GetSysColorBrush(COLOR_WINDOW));
+
+	DrawBitmap(hMemDC, 0, 0, Backg);
+	DrawBitmap(hMemDC, 675, 0, Backg);
+
+	DrawBitmap(hMemDC, 0, 625, CrossHair);
+	DrawBitmap(hMemDC, 122, 625, CrossHair);
+	DrawBitmap(hMemDC, 244, 625, CrossHair);
+	DrawBitmap(hMemDC, 366, 625, CrossHair);
+	DrawBitmap(hMemDC, 488, 625, CrossHair);
+	DrawBitmap(hMemDC, 610, 625, CrossHair);
+
+	DrawBitmap(hMemDC, 675, 625, CrossHair);
+	DrawBitmap(hMemDC, 797, 625, CrossHair);
+	DrawBitmap(hMemDC, 919, 625, CrossHair);
+	DrawBitmap(hMemDC, 1041, 625, CrossHair);
+	DrawBitmap(hMemDC, 1163, 625, CrossHair);
+	DrawBitmap(hMemDC, 1285, 625, CrossHair);
+
+
+	DrawBitmap(hMemDC, 0, 24, hHeart1);
+	DrawBitmap(hMemDC, 60, 24, hHeart2);
+	DrawBitmap(hMemDC, 120, 24, hHeart3);
+
+	DrawBitmap(hMemDC, 675, 24, hHeart4);
+	DrawBitmap(hMemDC, 735, 24, hHeart4);
+	DrawBitmap(hMemDC, 795, 24, hHeart4);
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (ass[i].be == TRUE)
+		{
+			//DrawBitmap(hMemDC, ass[i].x, ass[i].y, hBit[3]);
+			TransBlt(hMemDC, ass[i].x, ass[i].y, hBit[3], RGB(255, 0, 0));
+		}
+	}
+
+
+
+	if (Player1_MoveL)
+		DrawBitmap(hMemDC, player1.x, 625, hBit[4 + count]);
+	else if (Player1_MoveR)
+		DrawBitmap(hMemDC, player1.x, 625, hBit[7 + count]);
+	else if (!bdead)
+		DrawBitmap(hMemDC, player1.x, 625, hBit[count]);
+	else
+		TransBlt(hMemDC, player1.x, 625, hBit[10], RGB(255, 0, 0));
+
+	if (Player2_MoveL)
+		DrawBitmap(hMemDC, player2.x, 625, hBit2[4 + count2]);
+	else if (Player2_MoveR)
+		DrawBitmap(hMemDC, player2.x, 625, hBit2[7 + count2]);
+	else if (!bdead)
+		DrawBitmap(hMemDC, player2.x, 625, hBit2[count2]);
+	else
+		TransBlt(hMemDC, player2.x, 625, hBit[10], RGB(255, 0, 0));
+
+	DrawBitmap(hMemDC, 0, 675, oBitmap);
+
+	DrawBitmap(hMemDC, 675, 675, oBitmap);
+
+	if (isMenu == TRUE)
+	{
+		DrawBitmap(hMemDC, -60, 0, menu);
+		if (isHelp == TRUE && isMenu == TRUE)
+		{
+			DrawBitmap(hMemDC, -10, 0, help);
+		}
+	}
+
+
+	SelectObject(hMemDC, OldBit);
+	DeleteDC(hMemDC);
+	ReleaseDC(hWndMain, hdc);
+	InvalidateRect(hWndMain, NULL, FALSE);
 }
