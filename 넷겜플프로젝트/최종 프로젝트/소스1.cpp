@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "최종 프로젝트.h"
 #include "resource1.h"
+#include "Net_Connect.h"
 
 
 #include <windows.h>
@@ -58,6 +59,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	HMENU D_menu;
 	g_hInst = hInstance;
 
+	netInit();
+	HANDLE hThread;
+	hThread = CreateThread(NULL, 0, do_recv, (LPVOID)NULL, 0, NULL);
+	while (true) {
+		if (get_start_game()) break;
+	}
+
+
 		WndClass.cbClsExtra = 0;
 		WndClass.cbWndExtra = 0;
 		WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -101,6 +110,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 		TranslateMessage(&Message);
 		DispatchMessage(&Message);
 	}
+
+	netclose();
 	return (int)Message.wParam;
 }
 

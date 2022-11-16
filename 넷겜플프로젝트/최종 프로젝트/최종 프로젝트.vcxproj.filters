@@ -33,12 +33,21 @@
     <ClInclude Include="global.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Net_Connect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="최종 프로젝트.cpp">
+    <ClCompile Include="소스1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="소스1.cpp">
+    <ClCompile Include="Net_Connect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
