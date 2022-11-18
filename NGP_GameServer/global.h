@@ -13,3 +13,10 @@ const char SC_PACKET_START_GAME = 4;
 const char SC_PACKET_LIFE_COUNT = 5;
 const char SC_PACKET_WIN_CHECK = 6;
 const char SC_PACKET_HIT_CHECK = 7;
+
+
+//전부 준비시 게임시작을 알림
+struct sc_packet_start_game {
+	char size;
+	char type;
+};

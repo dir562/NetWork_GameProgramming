@@ -21,6 +21,10 @@ HANDLE			hCalculateEvent;
 
 int				thread_count = 0; // 몇개 클라가 접속했는지
 
+
+//함수
+void send_start_game_packet(SOCKET* client_socket, int client_id);				// 게임이 시작하면 모든 클라이언트에게 패킷 전송	
+
 void err_quit(const char* msg)
 {
 	LPVOID lpMsgBuf;
@@ -131,4 +135,12 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 	}
 	closesocket(client_sock);
 	return 0;
+}
+
+void send_start_game_packet(SOCKET* client_socket, int client_id)
+{
+	sc_packet_start_game packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_START_GAME;
+	send(*client_socket, reinterpret_cast<const char*>(&packet), sizeof(packet), 0);
 }
