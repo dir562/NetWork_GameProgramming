@@ -23,7 +23,9 @@ int				thread_count = 0; // 몇개 클라가 접속했는지
 
 
 //함수
-void send_start_game_packet(SOCKET* client_socket, int client_id);				// 게임이 시작하면 모든 클라이언트에게 패킷 전송	
+void send_start_game_packet(SOCKET* client_socket, int client_id);		
+void gameStart();						// 게임 시작 처리
+void send_login_ok_packet(SOCKET* client_socket, int client_id);					// 로그인 성공을 알려주는 패킷 전송// 게임이 시작하면 모든 클라이언트에게 패킷 전송	
 
 void err_quit(const char* msg)
 {
@@ -136,11 +138,23 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 	closesocket(client_sock);
 	return 0;
 }
-
+void gameStart()
+{
+	send_start_game_packet(&client_socket, client_id);
+	cout << "게임시작" << endl;
+}
 void send_start_game_packet(SOCKET* client_socket, int client_id)
 {
 	sc_packet_start_game packet;
 	packet.size = sizeof(packet);
 	packet.type = SC_PACKET_START_GAME;
 	send(*client_socket, reinterpret_cast<const char*>(&packet), sizeof(packet), 0);
+}
+void send_login_ok_packet(SOCKET* client_socket, int client_id)
+{
+	sc_packet_login_ok packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_LOGIN_OK;
+	packet.id = client_id;
+	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
