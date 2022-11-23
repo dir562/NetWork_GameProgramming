@@ -6,6 +6,12 @@ struct sc_packet_move {
 	float pos_x, pos_y;
 };
 
+struct sc_packet_boom {
+	char size;
+	char type;
+	float pos_x, pos_y;
+};
+
 const char SC_PACKET_MOVE = 1;
 const char SC_PACKET_DEAD = 2;
 const char SC_PACKET_BOOM = 3;
