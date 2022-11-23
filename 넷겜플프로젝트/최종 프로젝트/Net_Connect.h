@@ -21,3 +21,9 @@ DWORD WINAPI do_recv(LPVOID arg);
 
 
 bool get_start_game();
+
+struct cs_Player_packet_move {
+	char	size;
+	char	type;
+	char	direction;
+};

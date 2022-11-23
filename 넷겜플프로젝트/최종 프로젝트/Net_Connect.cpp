@@ -11,6 +11,10 @@ int retval = 0;
 char send_buf[BUFSIZE];
 char recv_buf[BUFSIZE];
 bool start_game = true;
+bool Player1_MoveL = FALSE;
+bool Player1_MoveR = FALSE;
+bool Player2_MoveL = FALSE;
+bool Player2_MoveR = FALSE;
 int n_hp = 3;
 
 void err_display(const char* msg)
@@ -112,7 +116,14 @@ DWORD WINAPI do_recv(LPVOID arg)
 				start_game = true;
 				break;
 			}
-		     }
+			case SC_PACKET_MOVE: {
+				cs_Player_packet_move packet;
+				packet.size = sizeof(packet);
+				packet.type = SC_PACKET_MOVE;
+				Player1_MoveL = TRUE;
+				break;
+			}
+		    }
 			p = p + packet_size;
 		}
 

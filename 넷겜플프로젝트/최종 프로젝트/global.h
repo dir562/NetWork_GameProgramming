@@ -18,6 +18,8 @@ typedef struct _player2 {
 	int y;
 }Player_s;
 
+
+
 Player player1;
 Player_s player2;
 
