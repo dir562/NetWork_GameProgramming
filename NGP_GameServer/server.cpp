@@ -27,6 +27,7 @@ int				thread_count = 0; // 몇개 클라가 접속했는지
 void send_start_game_packet(SOCKET* client_socket, int client_id);		
 void gameStart();						// 게임 시작 처리
 void send_login_ok_packet(SOCKET* client_socket, int client_id);					// 로그인 성공을 알려주는 패킷 전송// 게임이 시작하면 모든 클라이언트에게 패킷 전송	
+void send_move_packet(SOCKET* client_socket, int client_id);
 
 void err_quit(const char* msg)
 {
@@ -194,3 +195,12 @@ void send_login_ok_packet(SOCKET* client_socket, int client_id)
 }
 
 
+void send_move_packet(SOCKET* client_socket, int client_id)
+{
+	sc_packet_move packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_MOVE;
+	packet.pos_x = new_clients[client_id].pos_x;
+	packet.id = client_id;
+	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
+}
