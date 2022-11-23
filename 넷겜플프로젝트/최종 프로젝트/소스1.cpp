@@ -407,6 +407,7 @@ void Pause_and_Resume(HWND hWnd)
 			ass[i].be = FALSE;
 		}
 		bdead = FALSE;
+		bdead_2 = FALSE;
 		Score = 0;
 		Time = 0;
 
@@ -493,6 +494,7 @@ void Pause_by_toolbar(HWND hWnd)
 			ass[i].be = FALSE;
 		}
 		bdead = FALSE;
+		bdead_2 = FALSE;
 		Score = 0;
 		Time = 0;
 
@@ -574,7 +576,7 @@ void Game_Cycle(HWND hWnd) {
 			if (((ass[i].x < player2.x + 15 && player2.x + 15 < ass[i].x + 20) || (ass[i].x < player2.x && player2.x < ass[i].x + 20)) && ass[i].y > 600)
 			{
 
-				bdead = TRUE;
+				bdead_2 = TRUE;
 				KillTimer(hWnd, 5);
 				KillTimer(hWnd, 1);
 				KillTimer(hWnd, 2);
@@ -781,14 +783,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		case 'A':
-			if (!bdead)
+			if (!bdead_2)
 			{
 				Player2_MoveL = TRUE;
 				
 			}
 			break;
 		case 'D':
-			if (!bdead)
+			if (!bdead_2)
 			{
 				Player2_MoveR = TRUE;
 
@@ -1029,7 +1031,7 @@ void DrawBackGround()
 		DrawBitmap(hMemDC, player2.x, 625, hBit2[4 + count2]);
 	else if (Player2_MoveR)
 		DrawBitmap(hMemDC, player2.x, 625, hBit2[7 + count2]);
-	else if (!bdead)
+	else if (!bdead_2)
 		DrawBitmap(hMemDC, player2.x, 625, hBit2[count2]);
 	else
 		TransBlt(hMemDC, player2.x, 625, hBit[10], RGB(255, 0, 0));

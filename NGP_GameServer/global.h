@@ -29,3 +29,4 @@ struct sc_packet_login_ok {
 	char type;
 	char id;
 };
+

@@ -46,6 +46,7 @@ bool isGameRunning = FALSE;
 bool bPause = FALSE;
 bool bFade = TRUE;
 bool bdead = FALSE;
+bool bdead_2 = FALSE;
 HDC gMemDC;
 HBITMAP Gbit;
 static HBITMAP oBitmap;

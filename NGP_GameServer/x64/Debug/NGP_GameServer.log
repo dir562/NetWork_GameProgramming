@@ -1,0 +1,6 @@
+﻿  server.cpp
+C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\server.cpp(101,35): error C2065: 'ProcessClient': 선언되지 않은 식별자입니다.
+C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\server.cpp(101,58): error C2065: 'player': 선언되지 않은 식별자입니다.
+C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\server.cpp(102,38): error C2065: 'player': 선언되지 않은 식별자입니다.
+C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\server.cpp(143,26): error C2065: 'client_socket': 선언되지 않은 식별자입니다.
+C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\server.cpp(143,41): error C2065: 'client_id': 선언되지 않은 식별자입니다.

@@ -8,6 +8,7 @@
 #include <stdio.h> // printf(), ...
 #include<iostream>
 #include"global.h"
+#include"Player.h"
 
 #pragma comment(lib, "ws2_32") // ws2_32.lib 링크
 
@@ -18,7 +19,7 @@ using namespace std;
 
 HANDLE			hSendEvent;
 HANDLE			hCalculateEvent;
-
+unordered_map<int, Player>new_clients;
 int				thread_count = 0; // 몇개 클라가 접속했는지
 
 
@@ -112,37 +113,68 @@ int main(int argc, char* argv[])
 DWORD WINAPI ProcessClient(LPVOID arg)
 {
 
-	int retval; // 오류 검출 변수
-	// 전달된 소켓 저장
-	//
+	int retval;
 	SOCKET client_sock = (SOCKET)arg;
 	char* buf;
 	int len;
-	// 접속패킷전달
-	//send_login_ok_packet();
+
+	// send_login_ok_packet();
 
 	// 클라이언트와 데이터 통신
 	while (1) {
 		retval = recv(client_sock, buf, len, 0);
 		if (retval == SOCKET_ERROR) {
 			cout << "강제 연결 끊김" << endl;
-			//사망시 보내줄패킷전달
 			//send_dead_packet();
 		}
 
 	}
 
-	while (1) {		// 죽으면 보내주는것을 받기는 하지만 처리는 해주지 말자
+	while (1) {		
 		retval = recv(client_sock, buf, len, 0);
 	}
 	closesocket(client_sock);
 	return 0;
 }
+
+void processing_client(int client_id, char*p)
+{
+	unsigned char packet_type = p[1];
+	Player& cl = new_clients[client_id];
+	switch (packet_type)
+	{
+	case SC_PACKET_MOVE: {
+		sc_packet_move* packet = reinterpret_cast<sc_packet_move*>(p);
+
+		switch (packet->id)
+		{
+		case 0:
+			cl.pos_x += cl.speed;
+			break;
+		case 1:
+			cl.pos_x -= cl.speed;
+			break;
+		default:
+			cout << "오류값 전달!!\n" << client_id << endl;
+			exit(-1);
+		}
+
+	}
+     
+
+
+	}
+}
+
+
+
 void gameStart()
 {
 	send_start_game_packet(&client_socket, client_id);
 	cout << "게임시작" << endl;
 }
+
+
 void send_start_game_packet(SOCKET* client_socket, int client_id)
 {
 	sc_packet_start_game packet;
@@ -150,6 +182,8 @@ void send_start_game_packet(SOCKET* client_socket, int client_id)
 	packet.type = SC_PACKET_START_GAME;
 	send(*client_socket, reinterpret_cast<const char*>(&packet), sizeof(packet), 0);
 }
+
+
 void send_login_ok_packet(SOCKET* client_socket, int client_id)
 {
 	sc_packet_login_ok packet;
@@ -158,3 +192,5 @@ void send_login_ok_packet(SOCKET* client_socket, int client_id)
 	packet.id = client_id;
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
+
+
