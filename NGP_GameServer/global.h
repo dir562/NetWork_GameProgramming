@@ -52,3 +52,10 @@ struct sc_packet_life_count {
 	int lifeCount;
 };
 
+struct sc_WinPlayerCheck_packet {
+	char size;
+	char type;
+	char id;
+	bool bWinCheck;
+};
+

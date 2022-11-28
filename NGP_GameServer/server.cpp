@@ -29,6 +29,8 @@ void gameStart();						// 게임 시작 처리
 void send_login_ok_packet(SOCKET* client_socket, int client_id);					// 로그인 성공을 알려주는 패킷 전송// 게임이 시작하면 모든 클라이언트에게 패킷 전송	
 void send_move_packet(SOCKET* client_socket, int client_id);
 void send_hit_packet(SOCKET* client_socket, int client_id, int bullet_id);
+void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount);
+void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck);
 
 void err_quit(const char* msg)
 {
@@ -232,5 +234,15 @@ void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount)
 	packet.type = SC_PACKET_HIT;
 	packet.id = client_id;
 	packet.lifeCount = lifecount;
+	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
+}
+
+void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck)
+{
+	sc_WinPlayerCheck_packet packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_HIT;
+	packet.id = client_id;
+	packet.bWinCheck = bwincheck;
 	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
 }
