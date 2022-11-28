@@ -215,12 +215,22 @@ void send_bomb_packet(SOCKET* client_socket, int client_id) {
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
 
-void send_hit_packet(SOCKET* client_socket, int client_id, int bullet_id)
+void send_hit_packet(SOCKET* client_socket, int client_id, int bomb_id)
 {
 	sc_packet_hit packet;
 	packet.size = sizeof(packet);
 	packet.type = SC_PACKET_HIT;
 	packet.id = client_id;
-	packet.bullet_id = bullet_id;
+	packet.bomb_id = bomb_id;
+	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
+}
+
+void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount)
+{
+	sc_packet_life_count packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_HIT;
+	packet.id = client_id;
+	packet.lifeCount = lifecount;
 	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
 }

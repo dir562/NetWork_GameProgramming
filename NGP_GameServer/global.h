@@ -45,3 +45,10 @@ struct sc_packet_hit {
 	char bomb_id;
 };
 
+struct sc_packet_life_count {
+	char size;
+	char type;
+	char id;
+	int lifeCount;
+};
+
