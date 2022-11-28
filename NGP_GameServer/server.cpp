@@ -28,6 +28,7 @@ void send_start_game_packet(SOCKET* client_socket, int client_id);
 void gameStart();						// 게임 시작 처리
 void send_login_ok_packet(SOCKET* client_socket, int client_id);					// 로그인 성공을 알려주는 패킷 전송// 게임이 시작하면 모든 클라이언트에게 패킷 전송	
 void send_move_packet(SOCKET* client_socket, int client_id);
+void send_hit_packet(SOCKET* client_socket, int client_id, int bullet_id);
 
 void err_quit(const char* msg)
 {
@@ -212,4 +213,14 @@ void send_bomb_packet(SOCKET* client_socket, int client_id) {
 	packet.pos_x = Boom.x;
 	packet.pos_y = Boom.y;
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
+}
+
+void send_hit_packet(SOCKET* client_socket, int client_id, int bullet_id)
+{
+	sc_packet_hit packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_HIT;
+	packet.id = client_id;
+	packet.bullet_id = bullet_id;
+	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
 }
