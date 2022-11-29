@@ -22,6 +22,7 @@ const char SC_PACKET_HIT_CHECK = 7;
 //타입추가
 const char SC_PACKET_LOGIN_OK = 8;
 const char SC_PACKET_HIT = 9;
+const char SC_PACKET_DIFFICULTY = 10;// 난이도
 
 
 //전부 준비시 게임시작을 알림
@@ -59,3 +60,9 @@ struct sc_WinPlayerCheck_packet {
 	bool bWinCheck;
 };
 
+struct sc_difficulty_packet {
+	char size;
+	char type;
+	char id;
+	bool difficulty;
+};

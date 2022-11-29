@@ -208,12 +208,21 @@ void send_move_packet(SOCKET* client_socket, int client_id)
 	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
 }
 
-void send_bomb_packet(SOCKET* client_socket, int client_id) {
+void send_bomb_packet(SOCKET* client_socket) {
 	sc_packet_boom packet;
 	packet.size = sizeof(packet);
 	packet.type = SC_PACKET_BOOM;
 	packet.pos_x = Boom.x;
 	packet.pos_y = Boom.y;
+	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
+}
+
+void send_difficulty_packet(SOCKET* client_socket, int client_id, bool difficulty) {
+	sc_difficulty_packet packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_DIFFICULTY;
+	packet.id = client_id;
+	packet.difficulty = difficulty;
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
 
