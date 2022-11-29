@@ -120,7 +120,20 @@ DWORD WINAPI do_recv(LPVOID arg)
 				cs_Player_packet_move packet;
 				packet.size = sizeof(packet);
 				packet.type = SC_PACKET_MOVE;
-				Player1_MoveL = TRUE;
+				if (packet.direction == VK_LEFT) {
+					if (n_hp != 0)
+					{
+						Player1_MoveL = TRUE;
+						Player2_MoveL = TRUE;
+					}
+				}
+				if (packet.direction == VK_RIGHT)
+				{
+					if (n_hp != 0) {
+						Player1_MoveR = TRUE;
+						Player2_MoveR = TRUE;
+					}
+				}
 				break;
 			}
 		    }

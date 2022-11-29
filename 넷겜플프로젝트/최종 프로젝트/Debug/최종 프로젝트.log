@@ -1,2 +1,8 @@
-﻿  소스1.cpp
-  최종 프로젝트.vcxproj -> C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\넷겜플프로젝트\Debug\최종 프로젝트.exe
+﻿  Net_Connect.cpp
+D:\NetWork_GameProgramming\넷겜플프로젝트\최종 프로젝트\protocol.h(6,12): error C2374: 'SC_PACKET_START_GAME': 재정의. 여러 번 초기화했습니다.
+D:\NetWork_GameProgramming\넷겜플프로젝트\최종 프로젝트\protocol.h(5,12): message : 'SC_PACKET_START_GAME' 선언을 참조하십시오.
+D:\NetWork_GameProgramming\넷겜플프로젝트\최종 프로젝트\Net_Connect.cpp(73,32): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  소스1.cpp
+D:\NetWork_GameProgramming\넷겜플프로젝트\최종 프로젝트\protocol.h(6,12): error C2374: 'SC_PACKET_START_GAME': 재정의. 여러 번 초기화했습니다.
+D:\NetWork_GameProgramming\넷겜플프로젝트\최종 프로젝트\protocol.h(5,12): message : 'SC_PACKET_START_GAME' 선언을 참조하십시오.
+  코드를 생성하고 있습니다...
