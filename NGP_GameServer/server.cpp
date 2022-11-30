@@ -164,7 +164,23 @@ void processing_client(int client_id, char*p)
 		}
 
 	}
-     
+	case SC_PACKET_DIFFICULTY: {
+		sc_difficulty_packet* packet2 = reinterpret_cast<sc_difficulty_packet*>(p);
+		switch (packet2->difficulty_number)
+		{
+		case 10:
+			packet2->easy = TRUE;
+			packet2->normal = FALSE;
+			packet2->hard = FALSE;
+			break;
+		case 20:
+			packet2->easy = FALSE;
+			packet2->normal = TRUE;
+			packet2->hard = FALSE;
+			break;
+			
+		}
+	}
 
 
 	}
@@ -217,12 +233,14 @@ void send_bomb_packet(SOCKET* client_socket) {
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
 
-void send_difficulty_packet(SOCKET* client_socket, int client_id, bool difficulty) {
+void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty, bool dif) {
 	sc_difficulty_packet packet;
 	packet.size = sizeof(packet);
 	packet.type = SC_PACKET_DIFFICULTY;
 	packet.id = client_id;
-	packet.difficulty = difficulty;
+	packet.difficulty_number = difficulty;
+//	packet.easy = dif;
+
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
 

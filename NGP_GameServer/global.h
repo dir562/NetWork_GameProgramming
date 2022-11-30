@@ -64,5 +64,8 @@ struct sc_difficulty_packet {
 	char size;
 	char type;
 	char id;
-	bool difficulty;
+	int difficulty_number;
+	bool easy;
+	bool normal;
+	bool hard;
 };
