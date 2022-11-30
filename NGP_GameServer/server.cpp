@@ -228,8 +228,8 @@ void send_bomb_packet(SOCKET* client_socket) {
 	sc_packet_boom packet;
 	packet.size = sizeof(packet);
 	packet.type = SC_PACKET_BOOM;
-	packet.pos_x = Boom.x;
-	packet.pos_y = Boom.y;
+	//packet.pos_x = Boom.x;
+	//packet.pos_y = Boom.y;
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
 
@@ -239,7 +239,18 @@ void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty
 	packet.type = SC_PACKET_DIFFICULTY;
 	packet.id = client_id;
 	packet.difficulty_number = difficulty;
-//	packet.easy = dif;
+	if (packet.easy == dif)
+	{
+		packet.easy = dif;
+	}
+	else if (packet.normal == dif)
+	{
+		packet.normal = dif;
+	}
+	else if (packet.hard == dif)
+	{
+		packet.hard = dif;
+	}
 
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
 }
