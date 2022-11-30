@@ -11,10 +11,10 @@ int retval = 0;
 char send_buf[BUFSIZE];
 char recv_buf[BUFSIZE];
 bool start_game = true;
-bool Player1_MoveL = FALSE;
-bool Player1_MoveR = FALSE;
-bool Player2_MoveL = FALSE;
-bool Player2_MoveR = FALSE;
+static bool Player1_MoveL = FALSE;
+static bool Player1_MoveR = FALSE;
+static bool Player2_MoveL = FALSE;
+static bool Player2_MoveR = FALSE;
 int n_hp = 3;
 
 void err_display(const char* msg)

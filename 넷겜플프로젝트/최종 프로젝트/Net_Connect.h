@@ -4,6 +4,7 @@
 #include "protocol.h"
 // #include "Player.h"
 #include <array>
+//#include "global.h"
 
 
 const int BUFSIZE = 2048;
