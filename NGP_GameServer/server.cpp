@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 		hThread = CreateThread(NULL, 0, ProcessClient, (LPVOID)client_sock, 0, NULL);
 		if (hThread == NULL) { closesocket(client_sock); }
 		else { CloseHandle(hThread); }
-
+		printf("연결 성공\n");
 		thread_count++;
 	}
 
@@ -119,20 +119,30 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 
 	int retval;
 	SOCKET client_sock = (SOCKET)arg;
-	char* buf = NULL;
-	int len = 0;
+	struct sockaddr_in clientaddr;
+	char addr[INET_ADDRSTRLEN];
+	int len;
+	char buf[BUFSIZE + 1];
 
+	// 클라이언트 정보 얻기
+	len = sizeof(clientaddr);
+	getpeername(client_sock, (struct sockaddr*)&clientaddr, &len);
+	inet_ntop(AF_INET, &clientaddr.sin_addr, addr, sizeof(addr));
 	// send_login_ok_packet();
-	printf("접속 성공\n");
+
 	// 클라이언트와 데이터 통신
 	while (1) {
-		retval = recv(client_sock, buf, len, 0);
+		retval = recv(client_sock, buf, BUFSIZE, 0);
 	
 
 		if (retval == SOCKET_ERROR) {
 			cout << "강제 연결 끊김" << endl;
 			//send_dead_packet();
 		}
+		else if (retval == 0)
+			break;
+
+
 
 
 	}
