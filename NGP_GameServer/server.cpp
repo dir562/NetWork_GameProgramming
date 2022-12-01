@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 		if (client_sock == INVALID_SOCKET) { err_display("ACCEPT()"); break; }
 
 
-		hThread = CreateThread(NULL, 0, ProcessClient, NULL, 0, NULL);
+		hThread = CreateThread(NULL, 0, ProcessClient, (LPVOID)client_sock, 0, NULL);
 		if (hThread == NULL) { closesocket(client_sock); }
 		else { CloseHandle(hThread); }
 
@@ -123,14 +123,17 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 	int len = 0;
 
 	// send_login_ok_packet();
-
+	printf("접속 성공\n");
 	// 클라이언트와 데이터 통신
 	while (1) {
 		retval = recv(client_sock, buf, len, 0);
+	
+
 		if (retval == SOCKET_ERROR) {
 			cout << "강제 연결 끊김" << endl;
 			//send_dead_packet();
 		}
+
 
 	}
 
