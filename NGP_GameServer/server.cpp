@@ -12,7 +12,7 @@
 
 #pragma comment(lib, "ws2_32") // ws2_32.lib 링크
 
-#define BUFSIZE 1024
+//  #define BUFSIZE 1024
 #define SERVERPORT 9000
 
 using namespace std;
@@ -31,7 +31,7 @@ void send_move_packet(SOCKET* client_socket, int client_id);
 void send_hit_packet(SOCKET* client_socket, int client_id, int bullet_id);
 void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount);
 void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck);
-
+DWORD WINAPI ProcessClient(LPVOID arg);
 void err_quit(const char* msg)
 {
 	LPVOID lpMsgBuf;
@@ -59,7 +59,7 @@ void err_display(const char* msg)
 int main(int argc, char* argv[])
 {
 	int retval;		// 오류 검출 변수
-
+	Player player;
 	// 윈속 초기화
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
 		if (client_sock == INVALID_SOCKET) { err_display("ACCEPT()"); break; }
 
 
-		hThread = CreateThread(NULL, 0, ProcessClient, (LPVOID)player, 0, NULL);
-		if (hThread == NULL) { closesocket(player->m_c_socket); }
+		hThread = CreateThread(NULL, 0, ProcessClient, NULL, 0, NULL);
+		if (hThread == NULL) { closesocket(client_sock); }
 		else { CloseHandle(hThread); }
 
 		thread_count++;
@@ -119,8 +119,8 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 
 	int retval;
 	SOCKET client_sock = (SOCKET)arg;
-	char* buf;
-	int len;
+	char* buf = NULL;
+	int len = 0;
 
 	// send_login_ok_packet();
 
@@ -190,7 +190,7 @@ void processing_client(int client_id, char*p)
 
 void gameStart()
 {
-	send_start_game_packet(&client_socket, client_id);
+//	send_start_game_packet(&client_socket, client_id);
 	cout << "게임시작" << endl;
 }
 
@@ -239,6 +239,9 @@ void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty
 	packet.type = SC_PACKET_DIFFICULTY;
 	packet.id = client_id;
 	packet.difficulty_number = difficulty;
+	packet.easy = FALSE;
+	packet.normal = FALSE;
+	packet.hard = FALSE;
 	if (packet.easy == dif)
 	{
 		packet.easy = dif;
