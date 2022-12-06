@@ -191,7 +191,10 @@ void processing_client(int client_id, char*p)
 			packet2->normal = TRUE;
 			packet2->hard = FALSE;
 			break;
-			
+		case 30:
+			packet2->easy = FALSE;
+			packet2->normal = FALSE;
+			packet2->hard = TRUE;
 		}
 	}
 
