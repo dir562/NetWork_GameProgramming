@@ -257,15 +257,15 @@ void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty
 	packet.hard = FALSE;
 	if (packet.easy == dif)
 	{
-		packet.easy = dif;
+		packet.easy = TRUE;
 	}
 	else if (packet.normal == dif)
 	{
-		packet.normal = dif;
+		packet.normal = TRUE;
 	}
 	else if (packet.hard == dif)
 	{
-		packet.hard = dif;
+		packet.hard = TRUE;
 	}
 
 	send(*client_socket, reinterpret_cast<char*>(&packet), sizeof(packet), 0);
