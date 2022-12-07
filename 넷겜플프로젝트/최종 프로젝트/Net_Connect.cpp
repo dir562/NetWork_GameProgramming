@@ -17,6 +17,8 @@ static bool Player2_MoveL = FALSE;
 static bool Player2_MoveR = FALSE;
 int n_hp = 3;
 
+
+
 void err_display(const char* msg)
 {
 	LPVOID lpMsgBuf;
