@@ -22,14 +22,8 @@ DWORD WINAPI do_recv(LPVOID arg);
 
 
 bool get_start_game();
+ 
 
-void send_start_game_packet(SOCKET* client_socket, int client_id);
-void send_login_ok_packet(SOCKET* client_socket, int client_id);
-void send_move_packet(SOCKET* client_socket, int client_id);
-void send_hit_packet(SOCKET* client_socket, int client_id, int bomb_id);
-void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount);
-void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck);
-void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty, bool dif);
 
 
 struct cs_Player_packet_move {

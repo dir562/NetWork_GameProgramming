@@ -32,6 +32,9 @@ void send_hit_packet(SOCKET* client_socket, int client_id, int bullet_id);
 void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount);
 void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck);
 DWORD WINAPI ProcessClient(LPVOID arg);
+DWORD WINAPI SendPacket(LPVOID arg);
+
+
 void err_quit(const char* msg)
 {
 	LPVOID lpMsgBuf;
@@ -302,4 +305,16 @@ void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwinc
 	packet.id = client_id;
 	packet.bWinCheck = bwincheck;
 	send(*client_socket, reinterpret_cast<const char*>(&packet), packet.size, 0);
+}
+
+DWORD WINAPI SendPacket(LPVOID arg) {
+	while (1) {
+		WaitForSingleObject(hCalculateEvent, INFINITE);
+		for (auto& pl : new_clients) {
+			for (int i = 1; i <= 3; ++i)
+				send_move_packet(&pl.second.G_socket, i);
+		}
+
+
+	}
 }

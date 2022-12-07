@@ -11,3 +11,10 @@ const char SC_PACKET_HIT_CHECK = 7;
 const char SC_PACKET_LOGIN_OK = 8;
 const char SC_PACKET_HIT = 9;
 const char SC_PACKET_DIFFICULTY = 10;// ≥≠¿Ãµµ
+
+
+
+
+
+
+

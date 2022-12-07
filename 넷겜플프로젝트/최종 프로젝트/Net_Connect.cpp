@@ -17,7 +17,13 @@ static bool Player2_MoveL = FALSE;
 static bool Player2_MoveR = FALSE;
 int n_hp = 3;
 
-
+void send_start_game_packet(SOCKET* client_socket, int client_id);
+void send_login_ok_packet(SOCKET* client_socket, int client_id);
+void send_move_packet(SOCKET* client_socket, int client_id);
+void send_hit_packet(SOCKET* client_socket, int client_id, int bomb_id);
+void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount);
+void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck);
+void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty, bool dif);
 
 void err_display(const char* msg)
 {
