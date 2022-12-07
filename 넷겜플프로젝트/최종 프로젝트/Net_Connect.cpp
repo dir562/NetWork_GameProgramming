@@ -149,3 +149,84 @@ bool get_start_game()
 {
 	return start_game;
 }
+
+void send_start_game_packet(SOCKET* client_socket, int client_id)
+{
+	sc_packet_start_game packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_START_GAME;
+	do_send(sizeof(packet), &packet);
+}
+
+void send_login_ok_packet(SOCKET* client_socket, int client_id)
+{
+	sc_packet_login_ok packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_LOGIN_OK;
+	packet.id = client_id;
+	do_send(sizeof(packet), &packet);
+}
+
+void send_move_packet(SOCKET* client_socket, int client_id)
+{
+	sc_packet_move packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_MOVE;
+
+	packet.id = client_id;
+	do_send(sizeof(packet), &packet);
+}
+
+void send_hit_packet(SOCKET* client_socket, int client_id, int bomb_id)
+{
+	sc_packet_hit packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_HIT;
+	packet.id = client_id;
+	packet.bomb_id = bomb_id;
+	do_send(sizeof(packet), &packet);
+}
+
+void send_life_count_packet(SOCKET* client_socket, int client_id, int lifecount)
+{
+	sc_packet_life_count packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_HIT;
+	packet.id = client_id;
+	packet.lifeCount = lifecount;
+	do_send(sizeof(packet), &packet);
+}
+
+void send_winplayercheck_packet(SOCKET* client_socket, int client_id, bool bwincheck)
+{
+	sc_WinPlayerCheck_packet packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_HIT;
+	packet.id = client_id;
+	packet.bWinCheck = bwincheck;
+	do_send(sizeof(packet), &packet);
+}
+
+void send_difficulty_packet(SOCKET* client_socket, int client_id, int difficulty, bool dif) {
+	sc_difficulty_packet packet;
+	packet.size = sizeof(packet);
+	packet.type = SC_PACKET_DIFFICULTY;
+	packet.id = client_id;
+	packet.difficulty_number = difficulty;
+	packet.easy = FALSE;
+	packet.normal = FALSE;
+	packet.hard = FALSE;
+	if (packet.easy == dif)
+	{
+		packet.easy = TRUE;
+	}
+	else if (packet.normal == dif)
+	{
+		packet.normal = TRUE;
+	}
+	else if (packet.hard == dif)
+	{
+		packet.hard = TRUE;
+	}
+	do_send(sizeof(packet), &packet);
+}
