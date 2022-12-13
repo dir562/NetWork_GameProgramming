@@ -1,1 +1,2 @@
 C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\x64\Debug\NGP_GameServer.exe
+D:\netgame\NetWork_GameProgramming\NGP_GameServer\x64\Debug\NGP_GameServer.exe

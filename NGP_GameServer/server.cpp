@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 
 	//쓰레드 생성
 	HANDLE hThread;
-	while (1)
+	while (thread_count <= 2)
 	{
 		addrlen = sizeof(client_addr);
 		client_sock = accept(sock, (SOCKADDR*)&client_addr, &addrlen);
@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 		hThread = CreateThread(NULL, 0, ProcessClient, (LPVOID)client_sock, 0, NULL);
 		if (hThread == NULL) { closesocket(client_sock); }
 		else { CloseHandle(hThread); }
-		printf("연결 성공\n");
+		printf("%d. 연결 성공\n", thread_count + 1);
 		thread_count++;
 	}
 

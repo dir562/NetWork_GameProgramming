@@ -16,4 +16,10 @@ public:
 	char buf[BUFSIZE];
 	RECT collision_rect;
 	bool bdead;
+
+public:
+	void get_BoundingRect();
+	void update(float fTimeElapsed);
+	//플레이어의 이전위치(이동전)로 설정
+	void setPrevPos();
 };

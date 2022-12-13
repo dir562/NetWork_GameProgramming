@@ -132,14 +132,14 @@ DWORD WINAPI do_recv(LPVOID arg)
 					if (n_hp != 0)
 					{
 						Player1_MoveL = TRUE;
-						Player2_MoveL = TRUE;
+						//Player2_MoveL = TRUE;
 					}
 				}
 				if (packet.direction == VK_RIGHT)
 				{
 					if (n_hp != 0) {
 						Player1_MoveR = TRUE;
-						Player2_MoveR = TRUE;
+						//Player2_MoveR = TRUE;
 					}
 				}
 				break;

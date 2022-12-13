@@ -1,3 +1,3 @@
 ﻿  server.cpp
-C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\server.cpp(241,39): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  NGP_GameServer.vcxproj -> C:\Users\ASUS\Documents\GitHub\NetWork_GameProgramming\NGP_GameServer\x64\Debug\NGP_GameServer.exe
+D:\netgame\NetWork_GameProgramming\NGP_GameServer\server.cpp(241,39): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  NGP_GameServer.vcxproj -> D:\netgame\NetWork_GameProgramming\NGP_GameServer\x64\Debug\NGP_GameServer.exe
